@@ -1,1 +1,5 @@
-# homework001
+Install instruction
+
+- Need to have docker and docker-compose
+- clone the this repo
+- get in this folder and execute "sh init.sh" ( if you get permission issue, just try  "chmod -R 7777 ./*" on this folder. if you don't want to think too much"
