@@ -41,8 +41,9 @@ class LineItemSeeder extends Seeder
         }
 
         $campaginArray = [];
-        foreach ($campaginTmpArray as $val) {
+        foreach ($campaginTmpArray as $key=>$val) {
             $tmpCampaginArray = array();
+            $tmpCampaginArray['id'] = $key;         
             $tmpCampaginArray['name'] = $val;         
             array_push($campaginArray,$tmpCampaginArray);
         }

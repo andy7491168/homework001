@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\CampaignController;
 use App\Http\Livewire\CampaignDetailController;
+use App\Http\Controllers\ChartController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,3 +23,4 @@ Route::get('/', CampaignController::class);
 Route::get('/campaign', CampaignController::class);
 
 Route::get('/campaign/detail/{campaignID}', CampaignDetailController::class);
+Route::get('/chart/{id}', [ChartController::class, 'show']);

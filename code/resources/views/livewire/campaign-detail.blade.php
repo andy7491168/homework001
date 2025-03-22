@@ -5,6 +5,11 @@
         <button class="btn btn-dark btn-sm" onclick="window.location.href='/'">Back to Campaigns</button>
         <br>
         <br>
+        <button class="btn btn-warning" onclick="openChart();">
+            Show booked vs actual
+        </button>
+        <br>
+        <br>
         <button class="btn btn-info btn-sm">Create line item</button>
         <input type="text" id="line_item_name" placeholder="type a line item name">
         <input type="text" id="booked_amount" placeholder="type a booked amount">
@@ -233,6 +238,13 @@ $(document).ready(function () {
             }
         });
     });
-});
 
+
+});
+function openChart(){
+       
+        var url = window.location.href; 
+        var campaignId = url.match(/(\d+)$/)[0];
+        window.open('/chart/'+campaignId);
+    }
 </script>
