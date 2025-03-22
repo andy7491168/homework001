@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\CampaignService;
 use App\DTOs\CampaignFilter;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 class CampaignController extends Controller
 {
    
@@ -32,9 +33,9 @@ class CampaignController extends Controller
                 'asc'
             ));
 
-            $csvFileName = 'campaigns_export_' . now()->format('Ymd_His') . '.csv';
+            $csvFileName = 'uploads/campaigns_export_' . now()->format('Ymd_His') . '.csv';
 
-            $handle = fopen('php://memory', 'r+');
+            $handle = fopen(public_path($csvFileName), 'w');
             
             fputcsv($handle, [
                 'Campaign ID', 
@@ -56,18 +57,13 @@ class CampaignController extends Controller
                     $campaign->invoice_amount
                 ]);
             }
-            rewind($handle);
-            return response()->stream(
-                function () use ($handle) {
-                    fpassthru($handle);
-                    fclose($handle); 
-                },
-                200,
-                [
-                    'Content-Type' => 'text/csv',
-                    'Content-Disposition' => 'attachment; filename="' . $csvFileName . '"',
-                ]
-            );
+            fclose($handle);
+            $filePath = public_path($csvFileName);
+
+            $s3Path =$csvFileName;
+            Storage::disk('s3')->put($s3Path, file_get_contents($filePath));
+            $fileUrl = Storage::disk('s3')->url($s3Path);
+            return redirect()->away($fileUrl);
     
         } catch (\Exception $e) {
             Log::error('Error exporting campaigns to CSV: ' . $e->getMessage(), [
