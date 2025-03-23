@@ -7,6 +7,8 @@ use App\Services\CampaignService;
 use App\DTOs\CampaignFilter;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+
 class CampaignController extends Controller
 {
    
@@ -32,6 +34,11 @@ class CampaignController extends Controller
                 'campaigns.name', 
                 'asc'
             ));
+
+            $uploadPath = public_path('uploads');
+            if (!File::exists($uploadPath)) {
+                File::makeDirectory($uploadPath, 0755, true);
+            }
 
             $csvFileName = 'uploads/campaigns_export_' . now()->format('Ymd_His') . '.csv';
 
