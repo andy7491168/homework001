@@ -50,6 +50,6 @@ class LineItemSeeder extends Seeder
     
         DB::table('line_items')->insert($lineItemArray);
         DB::table('campaigns')->insert($campaginArray);
-        
+        DB::select("SELECT setval('campaigns_id_seq', (SELECT MAX(id) FROM campaigns));");
     }
 }
