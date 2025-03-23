@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Event;
 use App\Observers\CampaignObserver;
 use App\Observers\LineItemObserver;
 use App\Listeners\CampaignCreatedListener;
+use App\Listeners\CampaignUpdatedListener;
 use App\Listeners\LineItemCreatedListener;
 use App\Listeners\LineItemUpdatedListener;
 use App\Models\Campaign;
@@ -27,12 +28,16 @@ class EventServiceProvider extends ServiceProvider
         'campaign.created' => [
             CampaignCreatedListener::class,
         ],
+        'campaign.updated' => [
+            CampaignUpdatedListener::class,
+        ],
         'lineItem.created' => [
             LineItemCreatedListener::class,
         ],
         'lineItem.updated' => [
             LineItemUpdatedListener::class,
         ],
+        
     ];
 
     /**

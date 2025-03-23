@@ -87,6 +87,8 @@
                         @endif
                     @endif
                 </th>
+                <th>comments</th>
+                <th></th>
                 <th></th>
             </tr>
         </thead>
@@ -98,8 +100,12 @@
                     <td>{{ $campaign->actual_amount }}</td>
                     <td>{{ $campaign->adjustments }}</td>
                     <td>{{ $campaign->invoice_amount }}</td>
+                    <td><a  href="#" class="show-comments" data-comments="{{ $campaign->comments }}">show comments</a></td>
                     <td>
                         <button class="btn btn-primary btn-sm" onclick="window.location.href='/campaign/detail/{{ $campaign->id }}'">Detail</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="window.location='/campaign/comment/{{ $campaign->id}}'">Modify Comments</button>
                     </td>
                 </tr>
             @endforeach
@@ -110,8 +116,21 @@
     <div class="d-flex justify-content-center mt-3">
         {{ $campaigns->links() }}
     </div>
+    <div class="comment-tooltip"></div>
 </div>
-
+<style>
+    .comment-tooltip {
+        position: absolute;
+        background: #333;
+        color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        display: none;
+        max-width: 300px;
+        white-space: pre-wrap;
+        z-index: 1000;
+    }
+</style>
 <script>
     $(document).ready(function() {
         $(".btn-info").click(function(e) {
@@ -142,4 +161,19 @@
             });
         });
     });
+</script>
+<script>
+document.querySelectorAll('.show-comments').forEach(item => {
+    item.addEventListener('mouseenter', function(event) {
+        let tooltip = document.querySelector('.comment-tooltip');
+        tooltip.textContent = this.getAttribute('data-comments');
+        tooltip.style.display = 'block';
+        tooltip.style.left = event.pageX + 'px';
+        tooltip.style.top = (event.pageY + 10) + 'px';
+    });
+
+    item.addEventListener('mouseleave', function() {
+        document.querySelector('.comment-tooltip').style.display = 'none';
+    });
+});
 </script>

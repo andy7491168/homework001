@@ -21,6 +21,8 @@ Route::get('/', function () {
 
 Route::get('/', CampaignController::class);
 Route::get('/campaign', CampaignController::class);
+Route::get('/campaign/comment/{id}', [CampaignController::class,'showComments']);
+Route::post('/campaign/comment/{id}', [CampaignController::class,'editComments']);
 
 Route::get('/campaign/detail/{campaignID}', CampaignDetailController::class);
 Route::get('/chart/{id}', [ChartController::class, 'show']);

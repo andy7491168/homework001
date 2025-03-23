@@ -26,7 +26,7 @@ class CampaignObserver
      */
     public function updated(Campaign $campaign)
     {
-        //
+        Event::dispatch('campaign.updated', $campaign);
     }
 
     /**

@@ -12,7 +12,6 @@ class ChartController extends Controller
         $lineItems = LineItem::where('campaign_id', $id)
         ->orderBy('id', 'asc')
         ->get();
-       $data=[];
        
        $output = [];
        foreach($lineItems as $row){

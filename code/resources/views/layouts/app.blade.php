@@ -4,6 +4,5 @@
 </head>
 <body>
     {{ $slot }}
-
     @livewireScripts
 </body>

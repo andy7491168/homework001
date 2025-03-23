@@ -19,6 +19,7 @@ class CampaignService
                 ->selectRaw('
                     campaigns.id, 
                     campaigns.name, 
+                    campaigns.comments, 
                     SUM(line_items.booked_amount) as booked_amount, 
                     SUM(line_items.actual_amount) as actual_amount, 
                     SUM(line_items.adjustments) as adjustments, 

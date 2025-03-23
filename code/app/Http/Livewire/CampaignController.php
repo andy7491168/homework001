@@ -6,7 +6,8 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Services\CampaignService;
 use App\DTOs\CampaignFilter;
-
+use App\Models\Campaign;
+use Illuminate\Http\Request;
 class CampaignController extends Component
 {
     use WithPagination;
@@ -52,6 +53,36 @@ class CampaignController extends Component
         } else {
             $this->sortField = $field;
             $this->sortDirection = 'asc';
+        }
+    }
+
+    public function showComments($id)
+    { 
+        $campain = Campaign::find($id);
+        // $campain->comments = '新的名稱';
+        // $campain->save();
+        return view('comment', ['data' => $campain->comments,'id'=>$id]);
+       
+    }
+    public function editComments($id, Request $request)
+    {
+        try {
+            $comments = $request->input('comments');
+            $campaign = Campaign::find($id);
+            
+            if (!$campaign) {
+                return response("<script>alert('fail: Campaign not found'); window.location.href = '/campaign/comment/".$id."';</script>", 404)
+                    ->header('Content-Type', 'text/html');
+            }
+            
+            $campaign->comments = $comments;
+            $campaign->save();
+            
+            return response("<script>alert('success'); window.location.href = '/campaign/comment/".$id."';</script>", 200)
+                ->header('Content-Type', 'text/html');
+        } catch (\Exception $e) {
+            return response("<script>alert('fail: " . addslashes($e->getMessage()) . "'); window.location.href = '/campaign/comment/".$id."';</script>", 500)
+                ->header('Content-Type', 'text/html');
         }
     }
 }

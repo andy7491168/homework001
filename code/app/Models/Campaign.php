@@ -10,6 +10,7 @@ class Campaign extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+    protected $primaryKey = 'id';
 
     public function lineItems()
     {

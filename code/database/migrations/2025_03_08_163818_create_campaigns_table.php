@@ -25,6 +25,7 @@ class CreateCampaignsTable extends Migration
             "name" varchar(255) NOT NULL,
             "created_at" timestamptz DEFAULT CURRENT_TIMESTAMP,
             "updated_at" timestamptz DEFAULT CURRENT_TIMESTAMP,
+            "comments" text,
             PRIMARY KEY ("id")
         );
         ');
