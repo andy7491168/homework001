@@ -7,4 +7,5 @@ mv ./code/env-example ./code/.env
 sleep 3
 docker-compose exec php-fpm php artisan migrate
 docker-compose exec php-fpm php artisan db:seed --class=LineItemSeeder
-
+sleep 3
+docker-compose exec php-fpm php artisan test
